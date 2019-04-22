@@ -1,0 +1,67 @@
+// This file is part of Maze application
+// File name: MazeFunction.jack
+
+/** Implements the useful function for Maze. */
+
+class MazeFunction {
+	
+	/** return the given location pixel valve*/
+	function boolean locColour(int x, int y){
+		var int ramAddress;
+		var int loc;
+		var int valve;
+		var int time;
+		var int quotient;
+		var int tmp;
+		var boolean carry;
+		var int colour;
+		let ramAddress=16384+(y*32)+(x/16);
+		let loc=x-(16*(x/16));
+		let valve=Memory.peek(ramAddress);
+		let time = 0;
+		let tmp = 0;
+		let quotient = valve;
+		let colour = -1;
+		let carry = true;
+		if ((valve > 0)|(valve = 0)){	
+			while (time < 16){
+				let tmp = quotient;
+				let quotient = quotient/2;
+				if (time = loc) {
+					let colour = tmp - (2*quotient);
+					if(colour = 1) {
+						return true;
+					}
+					if(colour = 0) {
+						return false;
+					}
+				}
+				let time = time + 1;
+			}
+		}
+		else {
+			let quotient = -valve;
+			 while (time < 16){
+				let tmp = quotient;
+				let quotient = quotient/2;
+				let colour = tmp - (2*quotient);
+				if (time = loc) {
+					if (((colour = 1) & (~carry)) | ((colour = 0) & (carry))) {
+						return false;
+					}
+					else {
+						return true;
+					}
+				}
+				if ((colour = 1) | (~carry)) {
+					let carry = false;
+				}
+				else {
+					let carry = true;
+				}
+				let time = time + 1;
+			}
+		}
+		return false;
+	}
+}

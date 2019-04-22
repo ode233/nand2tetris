@@ -1,0 +1,388 @@
+// This file is part of Maze application
+// File name: SquareMan.jack
+
+/** Implements a SquareMan. */
+class SquareMan {
+
+	field int x, y;      // screen location of the SquareMan
+	field int size;      // length of this square, in pixels
+	field boolean colour; // the last circle colour.
+	field int score;
+
+	/** Constructs a new SquareMan with a given location and size. */
+	constructor SquareMan new() {
+		// initial the SquareMan location.
+		let x = 63;
+		let y = 235;
+		// initial the SquareMan size.
+		let size = 7;
+		// initial the circle colour.
+		let colour = false;
+		let score = 119;
+		do draw();
+		return this;
+	}
+
+   /** Disposes this square. */
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	/** Draws the square on the screen. */
+	method void draw() {
+		do Screen.setColor(true);
+		do Screen.drawRectangle(x, y, x + size, y + size);
+		return;
+	}
+   
+	/** Erases the square from the screen. */
+	method void erase() {
+		do Screen.setColor(false);
+		do Screen.drawRectangle(x, y, x + size, y + size);
+		return;
+	}
+   
+	/** return the score. */
+	method int score() {
+		return score;
+	}
+	
+	/** Does teh square reach the end? */
+	method int isSuccess() {
+		if (((x>340)&(x<354))&(y=248)){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+   /** Moves the square up by 1 pixels. */
+	method void moveUp() {
+		var boolean isBlackPixel;
+		var boolean isWhitePixel;
+		var boolean isBlackCircle;
+		var int blackTime;
+		var int i;
+		let isBlackPixel = false;
+		let isWhitePixel = false;
+		let isBlackCircle = false;
+		let blackTime = 0;
+		let i = 0;
+		if (y > 0) {
+			while (i<8) {
+				if (MazeFunction.locColour(x+i,y-1)){
+					let isBlackPixel = true;
+					if (MazeFunction.locColour(x+i,y-2)){
+						let blackTime = blackTime + 1;
+						if (MazeFunction.locColour(x+i,y-5)) {
+							let isBlackCircle = true;
+						}
+					}
+				}
+				else {
+					let isWhitePixel = true;
+				}
+				let i = i + 1;
+			}
+			// if no black pixel , move 1 pixel.
+			if (~isBlackPixel) {
+				do Screen.setColor(false);
+				do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+				let y = y - 1;
+				do Screen.setColor(true);
+				do Screen.drawRectangle(x, y, x + size, y + 1);
+			}
+			// if is correct circle, skip it.
+			else {
+				if (isWhitePixel&(blackTime>1)) {
+					if (((isBlackCircle)&(~colour))){
+						do erase();
+						if ((y - 20)>0){
+							let y = y - 20;
+						}
+						do draw();
+						let colour = true;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the white circle next.");
+						let score = score - 1;
+						return;
+					}
+					if (((~isBlackCircle)&(colour))) {
+						do erase();
+						if ((y - 20)>0){
+							let y = y - 20;
+						}
+						do draw();
+						let colour = false;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the black circle next.");
+						let score = score - 1;
+						return;
+					}
+					// if not a correct circle, kick square back.
+					do erase();
+					if ((y+size+20)<255){
+						let y = y + 20;
+					}
+					do draw();
+					let score = score - 1;
+					return;
+				}
+			}
+		}
+		return;
+    }
+
+   /** Moves the square down by 1 pixels. */
+   method void moveDown() {
+		var boolean isBlackPixel;
+		var boolean isWhitePixel;
+		var boolean isBlackCircle;
+		var int blackTime;
+		var int i;
+		let isBlackPixel = false;
+		let isWhitePixel = false;
+		let isBlackCircle = false;
+		let blackTime = 0;
+		let i = 0;
+		if ((y + size) < 255) {
+			while (i<8) {
+				if (MazeFunction.locColour(x+i,y+size+1)){
+					let isBlackPixel = true;
+					if (MazeFunction.locColour(x+i,y+size+2)){
+						let blackTime = blackTime + 1;
+						if (MazeFunction.locColour(x+i,y+size+5)) {
+							let isBlackCircle = true;
+						}
+					}
+				}
+				else {
+					let isWhitePixel = true;
+				}
+				let i = i + 1;
+			}
+			// if no black pixel , move 1 pixel.
+			if (~isBlackPixel) {
+				do Screen.setColor(false);
+				do Screen.drawRectangle(x, y, x + size, y + 1);
+				let y = y + 1;
+				do Screen.setColor(true);
+				do Screen.drawRectangle(x, (y + size) - 1, x + size, y + size);
+			}
+			// if is correct circle, skip it.
+			else {
+				if (isWhitePixel&(blackTime>1)) {
+					if (((isBlackCircle)&(~colour))){
+						do erase();
+						if ((y+size+20)<255){
+							let y = y + 20;
+						}
+						do draw();
+						let colour = true;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the white circle next.");
+						let score = score - 1;
+						return;
+					}
+					if (((~isBlackCircle)&(colour))) {
+						do erase();
+						if ((y+size+20)<255){
+							let y = y + 20;
+						}
+						do draw();
+						let colour = false;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the black circle next.");
+						let score = score - 1;
+						return;
+					}
+					// if not a correct circle, kick square back.
+					do erase();
+					if ((y - 20)>0){
+						let y = y - 20;
+					}
+					do draw();
+					let score = score - 1;
+					return;
+				}
+			}
+		}
+		return;
+   }
+
+   /** Moves the square left by 1 pixels. */
+   method void moveLeft() {
+		var boolean isBlackPixel;
+		var boolean isWhitePixel;
+		var boolean isBlackCircle;
+		var int blackTime;
+		var int i;
+		let isBlackPixel = false;
+		let isWhitePixel = false;
+		let isBlackCircle = false;
+		let blackTime = 0;
+		let i = 0;
+		if (x > 0) {
+			while (i<8) {
+				if (MazeFunction.locColour(x-1,y+i)){
+					let isBlackPixel = true;
+					if (MazeFunction.locColour(x-2,y+i)){
+						let blackTime = blackTime + 1;
+						if (MazeFunction.locColour(x-5,y+i)) {
+							let isBlackCircle = true;
+						}
+					}
+				}
+				else {
+					let isWhitePixel = true;
+				}
+				let i = i + 1;
+			}
+			// if no black pixel , move 1 pixel.
+			if (~isBlackPixel) {
+				do Screen.setColor(false);
+				do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+				let x = x - 1;
+				do Screen.setColor(true);
+				do Screen.drawRectangle(x, y, x + 1, y + size);
+			}
+			// if is correct circle, skip it.
+			else {
+				if (isWhitePixel&(blackTime>1)) {
+					if (((isBlackCircle)&(~colour))){
+						do erase();
+						if ((x-20)>0){
+							let x = x - 20;
+						}
+						do draw();
+						let colour = true;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the white circle next.");
+						let score = score - 1;
+						return;
+					}
+					if (((~isBlackCircle)&(colour))) {
+						do erase();
+						if ((x-20)>0){
+							let x = x - 20;
+						}
+						do draw();
+						let colour =false;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the black circle next.");
+						let score = score - 1;
+						return;
+					}
+					// if not a correct circle, kick square back.
+					do erase();
+					if (((x+20)+size)<511) {
+						let x = x + 20;
+					}
+					do draw();
+					let score = score - 1;
+					return;
+				}
+			}
+		}
+		return;
+   }
+
+   /** Moves the square right by 1 pixels. */
+   method void moveRight() {
+		var boolean isBlackPixel;
+		var boolean isWhitePixel;
+		var boolean isBlackCircle;
+		var int blackTime;
+		var int i;
+		let isBlackPixel = false;
+		let isWhitePixel = false;
+		let isBlackCircle = false;
+		let blackTime = 0;
+		let i = 0;
+		if ((x + size) < 511) {
+			while (i<8) {
+				if (MazeFunction.locColour(x+size+1,y+i)){
+					let isBlackPixel = true;
+					if (MazeFunction.locColour(x+size+2,y+i)){
+						let blackTime = blackTime + 1;
+						if (MazeFunction.locColour(x+size+5,y+i)) {
+							let isBlackCircle = true;
+						}
+					}
+				}
+				else {
+					let isWhitePixel = true;
+				}
+				let i = i + 1;
+			}
+			// if no black pixel , move 1 pixel.
+			if (~isBlackPixel) {
+				do Screen.setColor(false);
+				do Screen.drawRectangle(x, y, x + 1, y + size);
+				let x = x + 1;
+				do Screen.setColor(true);
+				do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+			}
+			// if is correct circle, skip it.
+			else {
+				if (isWhitePixel&(blackTime>1)) {
+					if (((isBlackCircle)&(~colour))){
+						do erase();
+						if (((x+20)+size)<511) {
+							let x = x + 20;
+						}
+						do draw();
+						let colour = true;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the white circle next.");
+						let score = score - 1;
+						return;
+					}
+					if (((~isBlackCircle)&(colour))) {
+						do erase();
+						if (((x+20)+size)<511) {
+							let x = x + 20;
+						}
+						do draw();
+						let colour = false;
+						do Output.moveCursor(0,0);
+						do Output.printString("You can only pass the black circle next.");
+						let score = score - 1;
+						return;
+					}
+					// if not a correct circle, kick square back.
+					do erase();
+					if ((x-20)>0){
+						let x = x - 20;
+					}
+					do draw();
+					let score = score - 1;
+					return;
+				}
+			}
+		}
+		return;
+   }
+   
+	/** Increments the square size by 1 pixels. */
+	method void incSize() {
+		if (((y + size) < 254) & ((x + size) < 510)) {
+			do erase();
+			let size = size + 2;
+			do draw();
+		}
+		return;
+	}
+	
+	/** Decrements the square size by 2 pixels. */
+	method void decSize() {
+		if (size > 2) {
+			do erase();
+			let size = size - 2;
+			do draw();
+		}
+		return;
+	}
+}

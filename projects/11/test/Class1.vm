@@ -1,0 +1,20 @@
+function Class1.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop static 0
+push argument 1
+pop static 1
+push pointer 0
+return
+function Class1.returnc1 0
+push argument 0
+pop pointer 0
+push constant 0
+return
+function Class1.returnc2 0
+push argument 0
+pop pointer 0
+push static 1
+return

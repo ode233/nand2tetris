@@ -1,0 +1,145 @@
+// This file is part of Maze application
+// File name: Maze.jack
+
+/** Implements the maze. */
+
+class Maze {
+
+	field int l, w;   // the maze's unit length and width,to help me draw the maze.
+	field int r;	  // the circle radius;
+
+	constructor Maze new() {
+		var int ox, oy;				   // the maze bottom left location.
+		var int axis;				   // the symmetrival axis of maze.
+		let w = 14;
+		let l = 42;
+		let r = 5;
+		let ox = 60;
+		let oy = 239;
+		let axis = ox+(2*l)+(3*w)+(l/2);
+		do drawHalf(ox,oy,1);		            //draw the left half maze.
+		do drawHalf(axis-ox+axis,oy,-1);		// draw the right half maze.
+		do drawHalfCircles(ox,oy,1);			// draw the left half circles.
+		do drawHalfCircles(axis-ox+axis,oy,-1);	// draw the right half circles.
+		do drawOtherThings(ox,oy);			    // draw other things.
+		return this;
+	}
+	
+   /** Disposes this maze. */
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+   /** Draw the half maze; */
+	method void drawHalf(int ox, int oy, int c) {
+		// c is to control draw the left or right
+		// if c==1,draw the left
+		// if c==-1,draw the right
+		do Screen.setColor(true);
+		do Screen.drawLine(ox,oy,ox,oy-(3*l)-(3*w));
+		do Screen.drawLine(ox+(w*c),oy,ox+(w*c),oy-l);
+		do Screen.drawLine(ox+(w*c),oy-l,ox+(((2*l)+(3*w))*c),oy-l);
+		do Screen.drawLine(ox+(((2*l)+(3*w))*c),oy-l,ox+(((2*l)+(3*w))*c),oy-(3*l)-(2*w));
+		do Screen.drawLine(ox+(((2*l)+(3*w))*c),oy-(3*l)-(2*w),ox+(((2*l)+(3*w)+(l/2))*c),oy-(3*l)-(2*w));
+		do Screen.drawLine(ox,oy-(3*l)-(3*w),ox+((l+w)*c),oy-(3*l)-(3*w));
+		do Screen.drawLine(ox+((l+w)*c),oy-(3*l)-(3*w),ox+((l+w)*c),oy-(4*l)-(4*w));
+		do Screen.drawLine(ox+((l+w)*c),oy-(4*l)-(4*w),ox+(((l*2)+(w*3)+(l/2))*c),oy-(4*l)-(4*w));
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(4*l)-(3*w),ox+((l+(2*w))*c),oy-(3*l)-(3*w));
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(4*l)-(3*w),ox+(((l*2)+(w*3)+(l/2))*c),oy-(4*l)-(3*w));
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(3*l)-(3*w),ox+(((l*2)+(w*3)+(l/2))*c),oy-(3*l)-(3*w));
+		// draw right top square
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(3*l)-(2*w),ox+(((2*l)+(2*w))*c),oy-(3*l)-(2*w));
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(3*l)-(2*w),ox+((l+(2*w))*c),oy-(2*l)-(2*w));
+		do Screen.drawLine(ox+(((2*l)+(2*w))*c),oy-(3*l)-(2*w),ox+(((2*l)+(2*w))*c),oy-(2*l)-(2*w));
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(2*l)-(2*w),ox+(((2*l)+(2*w))*c),oy-(2*l)-(2*w));
+		// draw left top square
+		do Screen.drawLine(ox+(w*c),oy-(3*l)-(2*w),ox+((l+w)*c),oy-(3*l)-(2*w));
+		do Screen.drawLine(ox+(w*c),oy-(3*l)-(2*w),ox+(w*c),oy-(2*l)-(2*w));
+		do Screen.drawLine(ox+((l+w)*c),oy-(3*l)-(2*w),ox+((l+w)*c),oy-(2*l)-(2*w));
+		do Screen.drawLine(ox+(w*c),oy-(2*l)-(2*w),ox+((l+w)*c),oy-(2*l)-(2*w));
+		// draw right bottom square
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(2*l)-w,ox+(((2*l)+(2*w))*c),oy-(2*l)-w);
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-(2*l)-w,ox+((l+(2*w))*c),oy-l-w);
+		do Screen.drawLine(ox+(((2*l)+(2*w))*c),oy-(2*l)-w,ox+(((2*l)+(2*w))*c),oy-l-w);
+		do Screen.drawLine(ox+((l+(2*w))*c),oy-l-w,ox+(((2*l)+(2*w))*c),oy-l-w);
+		// draw left bottom square
+		do Screen.drawLine(ox+(w*c),oy-(2*l)-w,ox+((l+w)*c),oy-(2*l)-w);
+		do Screen.drawLine(ox+(w*c),oy-(2*l)-w,ox+(w*c),oy-l-w);
+		do Screen.drawLine(ox+((l+w)*c),oy-(2*l)-w,ox+((l+w)*c),oy-l-w);
+		do Screen.drawLine(ox+(w*c),oy-l-w,ox+((l+w)*c),oy-l-w);
+		return;
+	}
+	
+	
+	/** Draw the half circle for the maze; */
+	method void drawHalfCircles(int ox, int oy, int c){
+		// c is to control draw the left or right
+		// if c==1,draw the left
+		// if c==-1,draw the right
+		
+		// draw the black circles.
+		do Screen.setColor(true);
+		do Screen.drawCircle(ox+((w/2)*c),oy-(l/2),r);		
+		do Screen.drawCircle(ox+((w+(l/2))*c),oy-l-(w/2),r);
+		do Screen.drawCircle(ox+(((2*w)+l+(l/2))*c),oy-(2*l)-w-(w/2),r);
+		do Screen.drawCircle(ox+((w+l+(w/2))*c),oy-(2*l)-(l/2)-(2*w),r);
+		do Screen.drawCircle(ox+((w/2)*c),oy-(2*l)-(l/2)-(2*w),r);
+		// draw the white circles.
+		do Screen.drawCircle(ox+((w/2)*c),oy-l-w-(l/2),r);
+		do Screen.drawCircle(ox+((w+(l/2))*c),oy-(2*l)-w-(w/2),r);
+		do Screen.drawCircle(ox+((w+l+(w/2))*c),oy-(3*l)-(3*w)-(l/2),r);
+		do Screen.setColor(false);
+		do Screen.drawCircle(ox+((w/2)*c),oy-l-w-(l/2),r-2);
+		do Screen.drawCircle(ox+((w+(l/2))*c),oy-(2*l)-w-(w/2),r-2);
+		do Screen.drawCircle(ox+((w+l+(w/2))*c),oy-(3*l)-(3*w)-(l/2),r-2);
+		return;
+	}
+	
+	/** Draw the other things for the maze; */
+	method void drawOtherThings(int ox, int oy){
+		// draw the black asymmetric circles.
+		do Screen.setColor(true);
+		do Screen.drawCircle(ox+(2*w)+(w/2)+(2*l),oy-(2*l)-(l/2)-(2*w),r);
+		do Screen.drawCircle(ox+(4*w)+(3*l)+(l/2),oy-(3*l)-(2*w)-(w/2),r);
+		do Screen.drawCircle(ox+(3*w)+(2*l)+(l/2),oy-(4*l)-(3*w)-(w/2),r);
+		// draw the white asymmetric circles.
+		do Screen.drawCircle(ox+w+l+(w/2),oy-l-w-(l/2),r);
+		do Screen.drawCircle(ox+w+(l/2),oy-(3*l)-(2*w)-(w/2),r);
+		do Screen.drawCircle(ox+(2*w)+(l/2)+l,oy-(3*l)-(2*w)-(w/2),r);
+		do Screen.drawCircle(ox+(3*w)+(w/2)+(3*l),oy-(2*l)-(l/2)-(2*w),r);
+		do Screen.setColor(false);
+		do Screen.drawCircle(ox+w+l+(w/2),oy-l-w-(l/2),r-2);
+		do Screen.drawCircle(ox+w+(l/2),oy-(3*l)-(2*w)-(w/2),r-2);
+		do Screen.drawCircle(ox+(2*w)+(l/2)+l,oy-(3*l)-(2*w)-(w/2),r-2);
+		do Screen.drawCircle(ox+(3*w)+(w/2)+(3*l),oy-(2*l)-(l/2)-(2*w),r-2);
+		// draw the end lines.
+		do Screen.setColor(true);
+		do Screen.drawLine(ox+(5*w)+(5*l),oy,ox+(5*w)+(5*l),255);
+		do Screen.drawLine(ox+(6*w)+(5*l),oy,ox+(6*w)+(5*l),255);
+		// write some words
+		do Output.moveCursor(21,10);
+		do Output.printString("Enter");
+		do Output.moveCursor(21,38);
+		do Output.printString("Exit");
+		do Output.moveCursor(5,46);
+		do Output.printString("find the path to");
+		do Output.moveCursor(7,46);
+		do Output.printString("exit.Pass through");
+		do Output.moveCursor(9,46);
+		do Output.printString("colored circle in");
+		do Output.moveCursor(11,46);
+		do Output.printString("order black,white,");
+		do Output.moveCursor(13,46);
+		do Output.printString("black,white,and so");
+		do Output.moveCursor(15,46);
+		do Output.printString("on.");
+		do Output.moveCursor(17,46);
+		do Output.printString("Use arrow keys to");
+		do Output.moveCursor(19,46);
+		do Output.printString("control,press 'r' ");
+		do Output.moveCursor(21,46);
+		do Output.printString("to restart.");
+		return;
+	}
+}

@@ -1,0 +1,101 @@
+// This file is part of Maze application
+// File name: MazeGame.jack
+
+/**
+ * Implements the Maze game.
+ * This simple game allows the user to move a black square around
+ * the screen. The user controls the square as follows.
+ * The 4 arrow keys are used to move the square up, down, left, and right.
+ */
+ 
+class MazeGame {
+	field SquareMan squareMan;
+	field Maze maze;
+	field int direction;
+	
+	/** Constructs a new MazeGame. */
+	constructor MazeGame new() {
+		let squareMan = SquareMan.new();
+		let maze = Maze.new();
+		let direction = 0;
+		return this;
+	}
+	
+	/** Disposes this game. */
+	method void dispose() {
+		do squareMan.dispose();
+		do maze.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	/** Moves the square in the current direction. */
+	method void moveSquare() {
+		if (direction = 1) { do squareMan.moveUp(); }
+		if (direction = 2) { do squareMan.moveDown(); }
+		if (direction = 3) { do squareMan.moveLeft(); }
+		if (direction = 4) { do squareMan.moveRight(); }
+		do Sys.wait(5);  // delays the next movement
+		return;
+   }
+   
+	/** Runs the game: handles the user's inputs and moves the square accordingly */
+	method void run() {
+		var char key;     // the key currently pressed by the user
+		var boolean exit;
+		var boolean restart;
+		let exit = false;
+		while (~exit) {
+			// Judging whether to reach the end point
+			if (squareMan.isSuccess()) {
+				do Screen.clearScreen();
+				do Output.moveCursor(0,0);
+				do Output.printString("Congratulations!");
+				do Output.moveCursor(2,0);
+				do Output.printString("Your score is: ");
+				do Output.printInt(squareMan.score());
+				do Output.printString("/100");
+				if ((squareMan.score()<100)) {
+					do Output.moveCursor(4,0);
+					do Output.printString("try to get 100 points");
+				}
+				if ((squareMan.score()>99) & (squareMan.score()<119)) {
+					do Output.moveCursor(4,0);
+					do Output.printString("Can you get more score?");
+				}
+				if ((squareMan.score() = 119)) {
+					do Output.moveCursor(4,0);
+					do Output.printString("You've got the highest score !!!");
+				}
+				do Output.moveCursor(6,0);
+				do Output.printString("press 'q' to quit, 'r' to restart.");
+			}
+			// waits for a key to be pressed
+			while (key = 0) {
+				let key = Keyboard.keyPressed();
+			}
+			let direction = 0;
+			if (key = 82)  { 						// r key for restart
+				do Screen.clearScreen();
+				do squareMan.dispose();
+				do maze.dispose();
+				let squareMan = SquareMan.new();
+				let maze = Maze.new();
+			}
+			if (key = 81)  { let exit = true; }     	// q key
+			if (key = 45)  { do squareMan.decSize(); }  // '-' key
+			if (key = 61)  { do squareMan.incSize(); }  // '=' key
+			if (key = 131) { let direction = 1; }   	// up arrow
+			if (key = 133) { let direction = 2; }   	// down arrow
+			if (key = 130) { let direction = 3; }  	 	// left arrow
+			if (key = 132) { let direction = 4; }  		// right arrow
+
+			// waits for the key to be released
+			while (~(key = 0)) {
+				do moveSquare();
+				let key = Keyboard.keyPressed();
+			}
+		} 
+	return;
+	}
+}

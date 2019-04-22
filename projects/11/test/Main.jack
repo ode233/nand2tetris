@@ -1,0 +1,12 @@
+class Main {
+	function void main() {
+		var Class1 class1;
+		var Class2 class2;
+		let class1=Class1.new(1,2);
+		let class2=Class2.new(3,4);
+		do class1.returnc1();
+		do Output.println();
+		do Output.printInt(class2.returnc3());
+		return;
+	}
+}

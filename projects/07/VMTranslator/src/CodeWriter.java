@@ -1,8 +1,10 @@
 
 public class CodeWriter {
-    private Out out;
+    Out out;
     private String vmFileName;
-    private int specil = 0;
+    private String functionName = "Bootstrap";
+    private int returnNum = 0;
+    private int special = 0;
 
     public CodeWriter(String vm) {
         out = new Out(vm + ".asm");
@@ -13,7 +15,6 @@ public class CodeWriter {
     }
 
     public void writeArithmetic(String command) {
-        out.println("// " + command);
         if (command.equals("add")) {
             out.println("@SP");
             out.println("M=M-1");
@@ -35,8 +36,8 @@ public class CodeWriter {
             out.println("A=M-1");
             out.println("M=-M");
         } else if (command.equals("eq")) {
-            String eq = "EQ_" + specil;
-            String eqEnd = "EQ_END_" + specil;
+            String eq = "EQ_" + special;
+            String eqEnd = "EQ_END_" + special;
             out.println("@SP");
             out.println("M=M-1");
             out.println("A=M");
@@ -54,8 +55,8 @@ public class CodeWriter {
             out.println("M=-1");
             out.println("(" + eqEnd + ")");
         } else if (command.equals("gt")) {
-            String gt = "GT_" + specil;
-            String gtEnd = "GT_END_" + specil;
+            String gt = "GT_" + special;
+            String gtEnd = "GT_END_" + special;
             out.println("@SP");
             out.println("M=M-1");
             out.println("A=M");
@@ -73,8 +74,8 @@ public class CodeWriter {
             out.println("M=-1");
             out.println("(" + gtEnd + ")");
         } else if (command.equals("lt")) {
-            String lt = "LT_" + specil;
-            String ltEnd = "LT_END_" + specil;
+            String lt = "LT_" + special;
+            String ltEnd = "LT_END_" + special;
             out.println("@SP");
             out.println("M=M-1");
             out.println("A=M");
@@ -112,11 +113,10 @@ public class CodeWriter {
             out.println("A=M-1");
             out.println("M=!M");
         } else throw new IllegalArgumentException("it's not a Arithmetic command");
-        specil++;
+        special++;
     }
 
     public void writePushPop(String type, String segment, int index) {
-        out.println("// " + type + " " + segment + " " + index);
         if (type.equals("C_PUSH")) {
             if (segment.equals("local")) {
                 out.println("@" + index);
@@ -285,6 +285,167 @@ public class CodeWriter {
                 } else throw new IllegalArgumentException("index must be 0 or 1");
             } else throw new IllegalArgumentException("segment is exception");
         } else throw new IllegalArgumentException("type is exception");
+    }
+
+    public void setFileName(String fileName) {
+        vmFileName = fileName;
+        if (vmFileName.contains("/")) {
+            vmFileName = vmFileName.substring(vmFileName.lastIndexOf('/') + 1);
+        }
+    }
+
+    public void writeInit() {
+        out.println("// init");
+        out.println("@256");
+        out.println("D=A");
+        out.println("@SP");
+        out.println("M=D");
+        writeCall("Sys.init", 0);
+    }
+
+    public void writeLabel(String label) {
+        out.println("(" + functionName + "$" + label + ")");
+    }
+
+    public void writeGoTo(String label) {
+        out.println("@" + functionName + "$" + label);
+        out.println("0;JMP");
+    }
+
+    public void writeIf(String label) {
+        out.println("@SP");
+        out.println("M=M-1");
+        out.println("A=M");
+        out.println("D=M");
+        out.println("@" + functionName + "$" + label);
+        out.println("D;JNE");
+    }
+
+    public void writeFunction(String functionName, int numVars) {
+        this.functionName = functionName;
+        returnNum = 0;
+        out.println("(" + functionName + ")");
+        for (int i = 0; i < numVars; i++) {
+            writePushPop("C_PUSH", "constant", 0);
+        }
+    }
+
+    public void writeCall(String callFunctionName, int numArgs) {
+        // push returnAddress
+        String functionReturn = functionName + "$ret." + returnNum;
+        out.println("@" + functionReturn);
+        out.println("D=A");
+        out.println("@SP");
+        out.println("A=M");
+        out.println("M=D");
+        // push LCL
+        out.println("@LCL");
+        out.println("D=M");
+        out.println("@SP");
+        out.println("M=M+1");
+        out.println("A=M");
+        out.println("M=D");
+        // push ARG
+        out.println("@ARG");
+        out.println("D=M");
+        out.println("@SP");
+        out.println("M=M+1");
+        out.println("A=M");
+        out.println("M=D");
+        // push THIS
+        out.println("@THIS");
+        out.println("D=M");
+        out.println("@SP");
+        out.println("M=M+1");
+        out.println("A=M");
+        out.println("M=D");
+        // push THAT
+        out.println("@THAT");
+        out.println("D=M");
+        out.println("@SP");
+        out.println("M=M+1");
+        out.println("A=M");
+        out.println("M=D");
+        out.println("@SP");
+        out.println("M=M+1");
+        // ARG=SP-5-nArgs
+        out.println("@5");
+        out.println("D=A");
+        out.println("@SP");
+        out.println("D=M-D");
+        out.println("@" + numArgs);
+        out.println("D=D-A");
+        out.println("@ARG");
+        out.println("M=D");
+        // LCL=SP
+        out.println("@SP");
+        out.println("D=M");
+        out.println("@LCL");
+        out.println("M=D");
+        // goto functionName
+        out.println("@" + callFunctionName);
+        out.println("0;JMP");
+        // (returnAddress)
+        out.println("(" + functionReturn + ")");
+        returnNum++;
+    }
+
+    public void writeReturn() {
+        // endFrame=LCL,endFrame is a temporary variable
+        // retAddr=*(endFrame-5)
+        out.println("@LCL");
+        out.println("D=M");
+        out.println("@5");
+        out.println("A=D-A");
+        out.println("D=M");
+        out.println("@temp");                     // retAddr store in temp
+        out.println("M=D");
+        // *ARG=pop()
+        out.println("@SP");
+        out.println("A=M-1");
+        out.println("D=M");
+        out.println("@ARG");
+        out.println("A=M");
+        out.println("M=D");
+        // SP=ARG+1
+        out.println("@ARG");
+        out.println("D=M+1");
+        out.println("@SP");
+        out.println("M=D");
+        // THAT=*(endFrame-1)
+        out.println("@LCL");
+        out.println("A=M-1");
+        out.println("D=M");
+        out.println("@THAT");
+        out.println("M=D");
+        // THIS=*(endFrame-2)
+        out.println("@LCL");
+        out.println("D=M");
+        out.println("@2");
+        out.println("A=D-A");
+        out.println("D=M");
+        out.println("@THIS");
+        out.println("M=D");
+        // ARG=*(endFrame-3)
+        out.println("@LCL");
+        out.println("D=M");
+        out.println("@3");
+        out.println("A=D-A");
+        out.println("D=M");
+        out.println("@ARG");
+        out.println("M=D");
+        // LCL=*(endFrame-4)
+        out.println("@LCL");
+        out.println("D=M");
+        out.println("@4");
+        out.println("A=D-A");
+        out.println("D=M");
+        out.println("@LCL");
+        out.println("M=D");
+        // goto retAddr
+        out.println("@temp");
+        out.println("A=M");
+        out.println("0;JMP");
     }
 
     public void close() {

@@ -1,0 +1,13 @@
+// This file is part of my Maze application
+// File name: Main.jack
+
+/** Initializes the Maze game and starts running it. */
+class Main {
+	function void main() {
+		var MazeGame mazeGame;
+		let mazeGame = MazeGame.new();
+		do mazeGame.run();
+		do mazeGame.dispose();
+		return;
+	}
+}

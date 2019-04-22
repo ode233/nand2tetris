@@ -15,6 +15,14 @@ class Math {
 
     /** Returns the absolute value of x. */
     function int abs(int x) {
+		var int abs;
+		if (x<0) {
+			let abs = -x;
+		}
+		else {
+			let abs = x;
+		}
+		return abs;
     }
 
     /** Returns the product of x and y. 

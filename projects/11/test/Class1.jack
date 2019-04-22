@@ -1,0 +1,20 @@
+class Class1 {
+	field int unuse;
+	static int c1;
+	static int c2;
+	
+	constructor Class1 new(int a1,int a2) {
+		let c1 = a1;
+		let c2 = a2;
+		return this;
+		
+	}
+	
+	method void returnc1(){
+		return ;
+	}
+	
+	method int returnc2(){
+		return c2;
+	}
+}

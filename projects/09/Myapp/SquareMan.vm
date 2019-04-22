@@ -1,0 +1,1798 @@
+function SquareMan.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push constant 63
+pop this 0
+push constant 235
+pop this 1
+push constant 7
+pop this 2
+push constant 0
+pop this 3
+push constant 119
+pop this 4
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push pointer 0
+return
+function SquareMan.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function SquareMan.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function SquareMan.erase 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function SquareMan.score 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function SquareMan.isSuccess 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 340
+gt
+push this 0
+push constant 354
+lt
+and
+push this 1
+push constant 248
+eq
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+goto IF_END0
+label IF_FALSE0
+push constant 0
+return
+label IF_END0
+function SquareMan.moveUp 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+push this 1
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 4
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push this 0
+push local 4
+add
+push this 1
+push constant 1
+sub
+call MazeFunction.locColour 2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 0
+push this 0
+push local 4
+add
+push this 1
+push constant 2
+sub
+call MazeFunction.locColour 2
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push constant 1
+add
+pop local 3
+push this 0
+push local 4
+add
+push this 1
+push constant 5
+sub
+call MazeFunction.locColour 2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+pop local 2
+label IF_FALSE3
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push constant 0
+not
+pop local 1
+label IF_END1
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 2
+add
+push constant 1
+sub
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push constant 1
+sub
+pop this 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push constant 1
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push local 1
+push local 3
+push constant 1
+gt
+and
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 2
+push this 3
+not
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 1
+push constant 20
+sub
+pop this 1
+label IF_FALSE7
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+not
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE6
+push local 2
+not
+push this 3
+and
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 1
+push constant 20
+sub
+pop this 1
+label IF_FALSE9
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 107
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push this 2
+add
+push constant 20
+add
+push constant 255
+lt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 1
+push constant 20
+add
+pop this 1
+label IF_FALSE10
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE5
+label IF_END4
+label IF_FALSE0
+push constant 0
+return
+function SquareMan.moveDown 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+push this 1
+push this 2
+add
+push constant 255
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 4
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push this 0
+push local 4
+add
+push this 1
+push this 2
+add
+push constant 1
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 0
+push this 0
+push local 4
+add
+push this 1
+push this 2
+add
+push constant 2
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push constant 1
+add
+pop local 3
+push this 0
+push local 4
+add
+push this 1
+push this 2
+add
+push constant 5
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+pop local 2
+label IF_FALSE3
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push constant 0
+not
+pop local 1
+label IF_END1
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push constant 1
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 1
+push constant 1
+add
+pop this 1
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 2
+add
+push constant 1
+sub
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push local 1
+push local 3
+push constant 1
+gt
+and
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 2
+push this 3
+not
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push this 2
+add
+push constant 20
+add
+push constant 255
+lt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 1
+push constant 20
+add
+pop this 1
+label IF_FALSE7
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+not
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE6
+push local 2
+not
+push this 3
+and
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push this 2
+add
+push constant 20
+add
+push constant 255
+lt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 1
+push constant 20
+add
+pop this 1
+label IF_FALSE9
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 107
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 1
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 1
+push constant 20
+sub
+pop this 1
+label IF_FALSE10
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE5
+label IF_END4
+label IF_FALSE0
+push constant 0
+return
+function SquareMan.moveLeft 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+push this 0
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 4
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push this 0
+push constant 1
+sub
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 0
+push this 0
+push constant 2
+sub
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push constant 1
+add
+pop local 3
+push this 0
+push constant 5
+sub
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+pop local 2
+label IF_FALSE3
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push constant 0
+not
+pop local 1
+label IF_END1
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 2
+add
+push constant 1
+sub
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 1
+sub
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push constant 1
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push local 1
+push local 3
+push constant 1
+gt
+and
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 2
+push this 3
+not
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+push constant 20
+sub
+pop this 0
+label IF_FALSE7
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+not
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE6
+push local 2
+not
+push this 3
+and
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 0
+push constant 20
+sub
+pop this 0
+label IF_FALSE9
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 107
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+add
+push this 2
+add
+push constant 511
+lt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 0
+push constant 20
+add
+pop this 0
+label IF_FALSE10
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE5
+label IF_END4
+label IF_FALSE0
+push constant 0
+return
+function SquareMan.moveRight 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+push this 0
+push this 2
+add
+push constant 511
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 4
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push this 0
+push this 2
+add
+push constant 1
+add
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 0
+push this 0
+push this 2
+add
+push constant 2
+add
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push constant 1
+add
+pop local 3
+push this 0
+push this 2
+add
+push constant 5
+add
+push this 1
+push local 4
+add
+call MazeFunction.locColour 2
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+not
+pop local 2
+label IF_FALSE3
+label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
+push constant 0
+not
+pop local 1
+label IF_END1
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+not
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push constant 1
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push this 0
+push constant 1
+add
+pop this 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 2
+add
+push constant 1
+sub
+push this 1
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push local 1
+push local 3
+push constant 1
+gt
+and
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 2
+push this 3
+not
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+add
+push this 2
+add
+push constant 511
+lt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+push constant 20
+add
+pop this 0
+label IF_FALSE7
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+not
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE6
+push local 2
+not
+push this 3
+and
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+add
+push this 2
+add
+push constant 511
+lt
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 0
+push constant 20
+add
+pop this 0
+label IF_FALSE9
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push constant 0
+pop this 3
+push constant 0
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push constant 40
+call String.new 1
+push constant 89
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 117
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 121
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 112
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 115
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 104
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 98
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 97
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 107
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 105
+call String.appendChar 2
+push constant 114
+call String.appendChar 2
+push constant 99
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 110
+call String.appendChar 2
+push constant 101
+call String.appendChar 2
+push constant 120
+call String.appendChar 2
+push constant 116
+call String.appendChar 2
+push constant 46
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE8
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 0
+push constant 20
+sub
+push constant 0
+gt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 0
+push constant 20
+sub
+pop this 0
+label IF_FALSE10
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+push this 4
+push constant 1
+sub
+pop this 4
+push constant 0
+return
+label IF_FALSE5
+label IF_END4
+label IF_FALSE0
+push constant 0
+return
+function SquareMan.incSize 0
+push argument 0
+pop pointer 0
+push this 1
+push this 2
+add
+push constant 254
+lt
+push this 0
+push this 2
+add
+push constant 510
+lt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 2
+push constant 2
+add
+pop this 2
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function SquareMan.decSize 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 2
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call SquareMan.erase 1
+pop temp 0
+push this 2
+push constant 2
+sub
+pop this 2
+push pointer 0
+call SquareMan.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
